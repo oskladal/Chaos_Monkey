@@ -1,38 +1,47 @@
-version: "3.9"
+version: "3.9"        #používaná verze 
 
-services:
-    php:
-        build:
+services:        #zapíšeme jednotlivé image které chceme využívat 
+    php:          #chceme v projektu php 
+        build:             #vždy musíme definovat zde se má stavět z image nebo z docker file/ tady definujeme cestu do Dockerfile
             context: .
             dockerfile: Dockerfile
-        ports:
+        ports:                   #komunikační port
         - 80:80
-        volumes:
+        volumes:                #mapování dat -> kde to bere data -> umožňuje nestálý příjem dat není nutno vytvářet nové image
         - ./src:/var/www/html/
         
         
     databaze:
-        platform: linux/x86_64
+        platform: linux/x86_64        #nutné pro funkčnost na mém OS - Mac na procesoru M1 
         image: mysql
-        environment:
+        environment:                  #vlastnosti mysql - nastavení hesla a vytvoření DB
           MYSQL_ROOT_PASSWORD: example
           MYSQL_DATABASE: test_ITRP
         volumes:
-        - my-data:/var/www/mysql
-        restart: always
+           - databaze-data:/var/lib/mysql
+           
+        
         
     phpmyadmin:
         image: phpmyadmin
-        restart: always
         ports:
-          - 8080:80
-        environment:
-          - PMA_ARBITRARY=1    
+          - 90:80
+        environment:            #vlastnost phpmyadmin - nastavení přístupu
+          - PMA_ARBITRARY=1  
+        depends_on:             #startuje až po najetí databáze
+          - databaze
+        links:                   # propojení s DB
+          - databaze 
         
         
-volumes:
-        my-data:
+volumes:                         #definice svazku - výhoda že můžeme pod tímto názvem využít u více služeb
+    databaze-data:
         
+        
+        
+        
+        
+#tento soubor definuje, co všechno chceme spustit najednou       
         
 
     
