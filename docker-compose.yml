@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+        - 80:80
+        volumes:
+        - ./src:/var/www/html/
+        
+        
+    databaze:
+        platform: linux/x86_64
+        image: mysql
+        environment:
+          MYSQL_ROOT_PASSWORD: example
+          MYSQL_DATABASE: test_ITRP
+        volumes:
+        - my-data:/var/www/mysql
+        restart: always
+        
+    phpmyadmin:
+        image: phpmyadmin
+        restart: always
+        ports:
+          - 8080:80
+        environment:
+          - PMA_ARBITRARY=1    
+        
+        
+volumes:
+        my-data:
+        
+        
+
+    
+
+
+
+
+
+
+
+
+
+
+ 
