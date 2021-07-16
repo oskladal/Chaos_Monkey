@@ -20,6 +20,24 @@ services:        #zapíšeme jednotlivé image které chceme využívat
         volumes:
            - databaze-data:/var/lib/mysql
            
+    databaze2:
+        platform: linux/x86_64        #nutné pro funkčnost na mém OS - Mac na procesoru M1 
+        image: mysql
+        environment:                  #vlastnosti mysql - nastavení hesla a vytvoření DB
+          MYSQL_ROOT_PASSWORD: example
+          MYSQL_DATABASE: test_ITRP2
+        volumes:
+           - databaze-data2:/var/lib/mysql  
+           
+    databaze3:
+        platform: linux/x86_64        #nutné pro funkčnost na mém OS - Mac na procesoru M1 
+        image: mysql
+        environment:                  #vlastnosti mysql - nastavení hesla a vytvoření DB
+          MYSQL_ROOT_PASSWORD: example
+          MYSQL_DATABASE: test_ITRP3
+        volumes:
+           - databaze-data3:/var/lib/mysql         
+           
         
         
     phpmyadmin:
@@ -31,13 +49,20 @@ services:        #zapíšeme jednotlivé image které chceme využívat
         depends_on:             #startuje až po najetí databáze
           - databaze
         links:                   # propojení s DB
-          - databaze 
+          - databaze
+          - databaze2 
+          - databaze3 
         
         
 volumes:                         #definice svazku - výhoda že můžeme pod tímto názvem využít u více služeb
     databaze-data:
+    databaze-data2:
+    databaze-data3:
         
         
+        
+        
+      
         
         
         

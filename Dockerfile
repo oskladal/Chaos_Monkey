@@ -4,6 +4,8 @@ RUN docker-php-ext-install mysqli  #povolení rozšíření php - umožní pak p
 
 
 
+
+
 #Zápis bez použití docker compose 
 #FROM php:7.4-apache   (na čem stavíme aplikaci)
 #COPY ./src:/var/www/html  (Musíme nakopírovat data/aby nebyl image php prázdný/odkaz na místo kde apache hledá data)
