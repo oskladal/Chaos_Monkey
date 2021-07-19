@@ -1,5 +1,8 @@
-FROM php:7.4-apache     #na čem stavíme celou aplikaci - tedy php který má již webový server apache
-RUN docker-php-ext-install mysqli  #povolení rozšíření php - umožní pak připojení k DB pomocí php, co chceme nad rámec základního balíčku
+#na čem stavíme celou aplikaci - tedy php který má již webový server apache
+FROM php:7.4-apache    
+
+#povolení rozšíření php - umožní pak připojení k DB pomocí php, co chceme nad rámec základního balíčku
+RUN docker-php-ext-install mysqli  
 
 
 
